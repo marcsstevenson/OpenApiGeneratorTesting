@@ -112,8 +112,7 @@ components:
         - personId
       properties:
         eventId:
-          allOf:
-            - $ref: '#/components/schemas/EventIdentifier'
+          $ref: '#/components/schemas/EventIdentifier'
           description: 'A unique identifier for the event that the booking relates to.'
         personId:
           type: string
@@ -129,8 +128,7 @@ components:
         - personId
       properties:
         eventId:
-          allOf:
-            - $ref: '#/components/schemas/EventIdentifier'
+          $ref: '#/components/schemas/EventIdentifier'
           description: 'A unique identifier for the event that the speaker relates to.'
         personId:
           type: string
