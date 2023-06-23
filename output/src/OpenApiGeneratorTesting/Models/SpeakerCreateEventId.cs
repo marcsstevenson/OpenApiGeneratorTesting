@@ -21,25 +21,24 @@ using OpenApiGeneratorTesting.Converters;
 namespace OpenApiGeneratorTesting.Models
 { 
     /// <summary>
-    /// A particular person&#39;s booking for an event.
+    /// A unique identifier for the event that the speaker relates to.
     /// </summary>
     [DataContract]
-    public class BookingCreate : IEquatable<BookingCreate>
+    public class SpeakerCreateEventId : IEquatable<SpeakerCreateEventId>
     {
         /// <summary>
-        /// Gets or Sets EventId
+        /// The unique identifier for the event. This identifier is shared between multiple instances of an event for recurring events, so it is not sufficient to uniquely identify an event instance for recurring events.
         /// </summary>
-        [Required]
+        /// <value>The unique identifier for the event. This identifier is shared between multiple instances of an event for recurring events, so it is not sufficient to uniquely identify an event instance for recurring events.</value>
         [DataMember(Name="eventId", EmitDefaultValue=false)]
-        public BookingCreateEventId EventId { get; set; }
+        public string EventId { get; set; }
 
         /// <summary>
-        /// The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.
+        /// The date of a recurring event instance in ISO 8601 with a timezone offset for the event&#39;s local time, eg \&quot;2021-05-30T15:00:00+12:00\&quot;. Only included for recurring events to uniquely identify an event instance in combination with the event ID.
         /// </summary>
-        /// <value>The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.</value>
-        [Required]
-        [DataMember(Name="personId", EmitDefaultValue=false)]
-        public string PersonId { get; set; }
+        /// <value>The date of a recurring event instance in ISO 8601 with a timezone offset for the event&#39;s local time, eg \&quot;2021-05-30T15:00:00+12:00\&quot;. Only included for recurring events to uniquely identify an event instance in combination with the event ID.</value>
+        [DataMember(Name="occurrenceDate", EmitDefaultValue=true)]
+        public string? OccurrenceDate { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -48,9 +47,9 @@ namespace OpenApiGeneratorTesting.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class BookingCreate {\n");
+            sb.Append("class SpeakerCreateEventId {\n");
             sb.Append("  EventId: ").Append(EventId).Append("\n");
-            sb.Append("  PersonId: ").Append(PersonId).Append("\n");
+            sb.Append("  OccurrenceDate: ").Append(OccurrenceDate).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -73,15 +72,15 @@ namespace OpenApiGeneratorTesting.Models
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((BookingCreate)obj);
+            return obj.GetType() == GetType() && Equals((SpeakerCreateEventId)obj);
         }
 
         /// <summary>
-        /// Returns true if BookingCreate instances are equal
+        /// Returns true if SpeakerCreateEventId instances are equal
         /// </summary>
-        /// <param name="other">Instance of BookingCreate to be compared</param>
+        /// <param name="other">Instance of SpeakerCreateEventId to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(BookingCreate other)
+        public bool Equals(SpeakerCreateEventId other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -93,9 +92,9 @@ namespace OpenApiGeneratorTesting.Models
                     EventId.Equals(other.EventId)
                 ) && 
                 (
-                    PersonId == other.PersonId ||
-                    PersonId != null &&
-                    PersonId.Equals(other.PersonId)
+                    OccurrenceDate == other.OccurrenceDate ||
+                    OccurrenceDate != null &&
+                    OccurrenceDate.Equals(other.OccurrenceDate)
                 );
         }
 
@@ -111,8 +110,8 @@ namespace OpenApiGeneratorTesting.Models
                 // Suitable nullity checks etc, of course :)
                     if (EventId != null)
                     hashCode = hashCode * 59 + EventId.GetHashCode();
-                    if (PersonId != null)
-                    hashCode = hashCode * 59 + PersonId.GetHashCode();
+                    if (OccurrenceDate != null)
+                    hashCode = hashCode * 59 + OccurrenceDate.GetHashCode();
                 return hashCode;
             }
         }
@@ -120,12 +119,12 @@ namespace OpenApiGeneratorTesting.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(BookingCreate left, BookingCreate right)
+        public static bool operator ==(SpeakerCreateEventId left, SpeakerCreateEventId right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(BookingCreate left, BookingCreate right)
+        public static bool operator !=(SpeakerCreateEventId left, SpeakerCreateEventId right)
         {
             return !Equals(left, right);
         }

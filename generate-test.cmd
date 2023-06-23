@@ -11,4 +11,3 @@ buildTarget=library^
 ,useCollection=true^
 ,useSwashbuckle=true^
 ,nullableReferenceTypes=true ^
---global-property models,apis,supportingFiles=CustomEnumConverter.cs:OnlyStringEnumConverter.cs, ^

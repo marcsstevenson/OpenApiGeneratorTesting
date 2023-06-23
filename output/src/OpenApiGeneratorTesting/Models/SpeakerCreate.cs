@@ -21,22 +21,22 @@ using OpenApiGeneratorTesting.Converters;
 namespace OpenApiGeneratorTesting.Models
 { 
     /// <summary>
-    /// A particular person&#39;s booking for an event.
+    /// A particular speaker added to an event.
     /// </summary>
     [DataContract]
-    public class BookingCreate : IEquatable<BookingCreate>
+    public class SpeakerCreate : IEquatable<SpeakerCreate>
     {
         /// <summary>
         /// Gets or Sets EventId
         /// </summary>
         [Required]
         [DataMember(Name="eventId", EmitDefaultValue=false)]
-        public BookingCreateEventId EventId { get; set; }
+        public SpeakerCreateEventId EventId { get; set; }
 
         /// <summary>
-        /// The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.
+        /// The unique identifier of the speaker
         /// </summary>
-        /// <value>The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.</value>
+        /// <value>The unique identifier of the speaker</value>
         [Required]
         [DataMember(Name="personId", EmitDefaultValue=false)]
         public string PersonId { get; set; }
@@ -48,7 +48,7 @@ namespace OpenApiGeneratorTesting.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class BookingCreate {\n");
+            sb.Append("class SpeakerCreate {\n");
             sb.Append("  EventId: ").Append(EventId).Append("\n");
             sb.Append("  PersonId: ").Append(PersonId).Append("\n");
             sb.Append("}\n");
@@ -73,15 +73,15 @@ namespace OpenApiGeneratorTesting.Models
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((BookingCreate)obj);
+            return obj.GetType() == GetType() && Equals((SpeakerCreate)obj);
         }
 
         /// <summary>
-        /// Returns true if BookingCreate instances are equal
+        /// Returns true if SpeakerCreate instances are equal
         /// </summary>
-        /// <param name="other">Instance of BookingCreate to be compared</param>
+        /// <param name="other">Instance of SpeakerCreate to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(BookingCreate other)
+        public bool Equals(SpeakerCreate other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -120,12 +120,12 @@ namespace OpenApiGeneratorTesting.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(BookingCreate left, BookingCreate right)
+        public static bool operator ==(SpeakerCreate left, SpeakerCreate right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(BookingCreate left, BookingCreate right)
+        public static bool operator !=(SpeakerCreate left, SpeakerCreate right)
         {
             return !Equals(left, right);
         }

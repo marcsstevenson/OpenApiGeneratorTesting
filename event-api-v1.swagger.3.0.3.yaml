@@ -47,6 +47,44 @@ paths:
         502:
           description: Bad gateway
 
+  /speakers:
+    post:
+      tags:
+        - speaker
+      summary: Creates a new event speaker.
+      description: Creates a new speaker for an event.
+      operationId: createSpeaker
+      requestBody:
+        description: Details for creating an event speaker.
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/SpeakerCreate'
+      responses:
+        201:
+          description: Successfully created
+        400:
+          description: |
+            Bad request. The following error codes can be returned:
+              * EventNotFound
+              * BookingAlreadyExists
+              * IncorrectParameterUsage
+              * UserConfigurationError
+        401:
+          description: Unauthorized
+        403:
+          description: |
+            Forbidden. The following error codes can be returned:
+              * EventNotReleased
+              * UserNotInAudience
+        404:
+          description: Not found
+        500:
+          description: Internal Server error
+        502:
+          description: Bad gateway
+
 components:
   schemas:
     EventIdentifier:
@@ -71,7 +109,7 @@ components:
       description: A particular person's booking for an event.
       required:
         - eventId
-        - bookingStatus
+        - personId
       properties:
         eventId:
           allOf:
@@ -80,4 +118,21 @@ components:
         personId:
           type: string
           description: The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.
+          nullable: false
+
+    SpeakerCreate:
+      title: SpeakerCreate
+      type: object
+      description: A particular speaker added to an event.
+      required:
+        - eventId
+        - personId
+      properties:
+        eventId:
+          allOf:
+            - $ref: '#/components/schemas/EventIdentifier'
+          description: 'A unique identifier for the event that the speaker relates to.'
+        personId:
+          type: string
+          description: The unique identifier of the speaker
           nullable: false
