@@ -1,0 +1,5 @@
+src/OpenApiGeneratorTesting/Controllers/BookingApi.cs
+src/OpenApiGeneratorTesting/Converters/CustomEnumConverter.cs
+src/OpenApiGeneratorTesting/Models/BookingCreate.cs
+src/OpenApiGeneratorTesting/Models/BookingCreateEventId.cs
+src/OpenApiGeneratorTesting/Models/EventIdentifier.cs

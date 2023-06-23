@@ -1,0 +1,83 @@
+openapi: '3.0.3'
+
+info:
+  title: 'Event API'
+  description: 'The Event API provides functionality related to calendar events and bookings'
+  version: '1.0.0'
+
+servers:
+  - url: '/event/v1'
+
+paths:
+  /bookings:
+    post:
+      tags:
+        - booking
+      summary: Creates a new event booking.
+      description: Creates a new booking for an event.
+      operationId: createBooking
+      requestBody:
+        description: Details for creating an event booking.
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/BookingCreate'
+      responses:
+        201:
+          description: Successfully created
+        400:
+          description: |
+            Bad request. The following error codes can be returned:
+              * EventNotFound
+              * BookingAlreadyExists
+              * IncorrectParameterUsage
+              * UserConfigurationError
+        401:
+          description: Unauthorized
+        403:
+          description: |
+            Forbidden. The following error codes can be returned:
+              * EventNotReleased
+              * UserNotInAudience
+        404:
+          description: Not found
+        500:
+          description: Internal Server error
+        502:
+          description: Bad gateway
+
+components:
+  schemas:
+    EventIdentifier:
+      title: EventIdentifier
+      type: object
+      description: 'A unique identifier for an event which consists of ID and, in the case of recurring event instances, date.'
+      properties:
+        eventId:
+          type: string
+          description: 'The unique identifier for the event. This identifier is shared between multiple instances of an event for recurring events, so it is not sufficient to uniquely identify an event instance for recurring events.'
+        occurrenceDate:
+          type: string
+          nullable: true
+          description: 'The date of a recurring event instance in ISO 8601 with a timezone offset for the event''s local time, eg "2021-05-30T15:00:00+12:00". Only included for recurring events to uniquely identify an event instance in combination with the event ID.'
+      example:
+        eventId: '43128940213498123'
+        occurrenceDate: '2021-05-30T15:00:00+12:00'
+
+    BookingCreate:
+      title: BookingCreate
+      type: object
+      description: A particular person's booking for an event.
+      required:
+        - eventId
+        - bookingStatus
+      properties:
+        eventId:
+          allOf:
+            - $ref: '#/components/schemas/EventIdentifier'
+          description: 'A unique identifier for the event that the booking relates to.'
+        personId:
+          type: string
+          description: The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.
+          nullable: false

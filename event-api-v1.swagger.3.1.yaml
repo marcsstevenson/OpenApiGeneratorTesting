@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Event API
+  description: The Event API provides functionality related to calendar events and bookings
+  contact: {}
+  version: '1.0.0'
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+servers:
+- url: /event/v1
+  variables: {}
+paths:
+  /bookings:
+    post:
+      tags:
+      - booking
+      summary: createBooking
+      description: Creates a new booking for an event.
+      operationId: createBooking
+      parameters: []
+      requestBody:
+        description: Details for creating an event booking.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/BookingCreate'
+              - description: Details for creating an event booking.
+              contentMediaType: application/json
+        required: true
+      responses:
+        '201':
+          description: Successfully created
+          headers: {}
+          content: {}
+        '400':
+          description: >-
+            Bad request. The following error codes can be returned:
+              * EventNotFound
+              * BookingAlreadyExists
+              * IncorrectParameterUsage
+              * UserConfigurationError
+          headers: {}
+          content: {}
+        '401':
+          description: Unauthorized
+          headers: {}
+          content: {}
+        '403':
+          description: >-
+            Forbidden. The following error codes can be returned:
+              * EventNotReleased
+              * UserNotInAudience
+          headers: {}
+          content: {}
+        '404':
+          description: Not found
+          headers: {}
+          content: {}
+        '500':
+          description: Internal Server error
+          headers: {}
+          content: {}
+        '502':
+          description: Bad gateway
+          headers: {}
+          content: {}
+      deprecated: false
+    parameters: []
+components:
+  schemas:
+    EventIdentifier:
+      title: EventIdentifier
+      type: object
+      properties:
+        eventId:
+          oneOf:
+          - type: string
+          description: The unique identifier for the event. This identifier is shared between multiple instances of an event for recurring events, so it is not sufficient to uniquely identify an event instance for recurring events.
+        occurrenceDate:
+          type:
+          - string
+          - 'null'
+          description: The date of a recurring event instance in ISO 8601 with a timezone offset for the event's local time, eg "2021-05-30T15:00:00+12:00". Only included for recurring events to uniquely identify an event instance in combination with the event ID.
+      description: A unique identifier for an event which consists of ID and, in the case of recurring event instances, date.
+      examples:
+      - eventId: '43128940213498123'
+        occurrenceDate: 2021-05-30T15:00:00+12:00
+    BookingCreate:
+      title: BookingCreate
+      required:
+      - eventId
+      type: object
+      properties:
+        eventId:
+          allOf:
+          - $ref: '#/components/schemas/EventIdentifier'
+          - description: A unique identifier for the event that the booking relates to.
+        personId:
+          type: string
+          description: The unique identifier of the person that this booking relates to. Can be omitted if making the booking as the authenticated user. If specified, the authentication user must have permission to perform the operation on behalf of this person.
+      description: A particular person's booking for an event.
+tags:
+- name: booking
+  description: ''
