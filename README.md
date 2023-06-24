@@ -6,7 +6,7 @@ This is a small project for testing the Open Api Generator version 6.6.0 using t
 
 - Java runtime
 - Node
-- openapi-generator-cli installed (version 6.6.0 used in this example)
+- openapi-generator-cli installed (version 6.6.0 of openapi-generator used in this example)
 
   npm install -g @openapitools/openapi-generator-cli
 
