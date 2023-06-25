@@ -68,11 +68,11 @@ This is a huge blocker for adopting 6.x versions of the openapi-generator for an
 
 Can this change in behavior be reverted to the 5.x behavior with configuration or with a custom template?
 
-Regarding a custom template, on inspecting the model.mustache file, the provided value for **dataType** is being supplied as  BookingCreateEventId/SpeakerCreateEventId for the EventId property and so this cannot be readily customised.
+Regarding a custom template, on inspecting the model.mustache file, the provided value for **dataType** is being supplied as BookingCreateEventId/SpeakerCreateEventId for the EventId property and so this cannot be readily customised.
 
 ## Observations
 
-Changing the openapi spec to 3.3 (example, event-api-v1.swagger.3.1.yaml) results in the type of the EventId being set back to EventIdentifier but the generator does not yet support 3.1 and so all of the primitive types are generated as object.
+Changing the openapi spec to 3.1 (example, event-api-v1.swagger.3.1.yaml) results in the type of the EventId being set back to EventIdentifier but the generator does not yet support 3.1 and so all of the primitive types are generated as object.
 
 ## Resources
 
